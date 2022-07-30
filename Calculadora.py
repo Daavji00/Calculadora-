@@ -36,7 +36,7 @@ nine_button = tk.Button(window, text='9', width=5, height=2)
 nine_button.grid(row=0,column=2)
 
 '''
-  Agregrar botones de operaciones aritméticas
+  Agregar botones de operaciones aritméticas
 '''
 
 prod_button = tk.Button(window, text='x', width=5, height=2)
@@ -47,5 +47,19 @@ sum_button = tk.Button(window, text='+', width=5, height=2)
 sum_button.grid(row=2, column=3)
 sub_button = tk.Button(window, text='-', width=5, height=2)
 sub_button.grid(row=2, column=4)
+
+'''
+  Agregar boton de all clear
+'''
+
+ac_button = tk.Button(window, text='AC', width=11, height=2)
+ac_button.grid(row=0, column=3, columnspan=2)
+
+'''
+  Agregar boton de igual
+'''
+
+eq_button = tk.Button(window, text='=', width=5, height=2)
+eq_button.grid(row=0, column=2)
 
 window.mainloop() # Correr ventana principal
