@@ -2,14 +2,21 @@
 
 # Este proyecto va a consistir en una calculadora básica escrita en python
 
+from re import sub
 import tkinter as tk
+
+from pyparsing import col
 
 # Main 
 
-window = tk.Tk()
-window.geometry('500x500')
+window = tk.Tk() #Crear ventana principal 
 
-one_button = tk.Button(window, text='1', width=5, height=2)
+'''
+  Agregar botones a la interfaz del uno al diez
+'''
+zero_button = tk.Button(window, text='0', width=5, height=2)
+zero_button.grid(row=3, column=1)
+one_button = tk.Button(window, text='1', width=5, height=2) 
 one_button.grid(row=2, column=0)
 two_button = tk.Button(window, text='2', width=5, height=2)
 two_button.grid(row=2, column=1)
@@ -28,4 +35,17 @@ eight_button.grid(row=0,column=1)
 nine_button = tk.Button(window, text='9', width=5, height=2)
 nine_button.grid(row=0,column=2)
 
-window.mainloop()
+'''
+  Agregrar botones de operaciones aritméticas
+'''
+
+prod_button = tk.Button(window, text='x', width=5, height=2)
+prod_button.grid(row=1, column=3)
+div_button = tk.Button(window, text='/', width=5, height=2)
+div_button.grid(row=1, column=4)
+sum_button = tk.Button(window, text='+', width=5, height=2)
+sum_button.grid(row=2, column=3)
+sub_button = tk.Button(window, text='-', width=5, height=2)
+sub_button.grid(row=2, column=4)
+
+window.mainloop() # Correr ventana principal
