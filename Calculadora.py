@@ -1,1 +1,31 @@
-dkjsdljsd
+### Proyecto Calculadora de Escritorio
+
+# Este proyecto va a consistir en una calculadora básica escrita en python
+
+import tkinter as tk
+
+# Main 
+
+window = tk.Tk()
+window.geometry('500x500')
+
+one_button = tk.Button(window, text='1', width=5, height=2)
+one_button.grid(row=2, column=0)
+two_button = tk.Button(window, text='2', width=5, height=2)
+two_button.grid(row=2, column=1)
+three_button = tk.Button(window, text='3', width=5, height=2)
+three_button.grid(row=2, column=2)
+four_button = tk.Button(window, text='4', width=5, height=2)
+four_button.grid(row=1,column=0)
+five_button = tk.Button(window, text='5', width=5, height=2)
+five_button.grid(row=1,column=1)
+six_button = tk.Button(window, text='6', width=5, height=2)
+six_button.grid(row=1,column=2)
+seven_button = tk.Button(window, text='7', width=5, height=2)
+seven_button.grid(row=0,column=0)
+eight_button = tk.Button(window, text='8', width=5, height=2)
+eight_button.grid(row=0,column=1)
+nine_button = tk.Button(window, text='9', width=5, height=2)
+nine_button.grid(row=0,column=2)
+
+window.mainloop()
