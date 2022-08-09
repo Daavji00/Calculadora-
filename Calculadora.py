@@ -7,26 +7,39 @@ import tkinter as tk
 # Funcion reconocer expresion
 
 def expresion(exp) :
-    
-    output.insert(1.0, str(exp))
+    if output.get(1.0) == "0": # Si el numero en pantalla es 0 se sustituye por otro
+      output.delete(1.0)    
+      output.insert(1.0, str(exp))
+      updatePosText(exp) 
+    else : # Mostramos los numeros en orden al que se marcan
+      if posText <= 30 : 
+        output.insert('1.' + str(posText) , str(exp))
+        print(output.index('1.' + str(posText)))
+        updatePosText(exp)
+      
 
 
+def updatePosText(accion):
+  global posText
+  if isinstance(accion, int) :
+    posText += 1
+  else :
+    posText -= 1
 
 # Main 
 
-window = tk.Tk() #Crear ventana principal 
+window = tk.Tk() # Crear ventana principal 
 
 '''
-  Salida
+    Mostrar salida 
 '''
 
-frame_output = tk.Frame(window)
-frame_output.grid(row=0, column=0)
-output = tk.Text(frame_output, width=25, height=2)
+frame_output = tk.Frame(window) # Crear frame de salida
+frame_output.grid(row=0, column=0) 
+output = tk.Text(frame_output, width=25, height=2) # Crear label text
+posText = 0 # Posicion columna donde se muestra el número
 output.pack()
-output.insert(tk.END, "0")
-
-
+output.insert(1.0, "0") # Insertar valor inicial 0 en la salida
 
 '''
   Agregar botones a la interfaz del uno al diez
