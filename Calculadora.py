@@ -17,8 +17,6 @@ def expresion(exp) :
         print(output.index('1.' + str(posText)))
         updatePosText(exp)
       
-
-
 def updatePosText(accion):
   global posText
   if isinstance(accion, int) :
@@ -93,8 +91,8 @@ ac_button.grid(row=0, column=3, columnspan=2)
   Agregar boton de igual
 '''
 
-eq_button = tk.Button(frame_botones, text='=', width=5, height=2)
-eq_button.grid(row=0, column=2)
+eq_button = tk.Button(frame_botones, text='=', width=11, height=2)
+eq_button.grid(row=3, column=3, columnspan=2)
 
 
 
