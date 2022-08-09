@@ -7,6 +7,11 @@ import tkinter as tk
 # Funcion reconocer expresion
 
 def expresion(exp) :
+    '''if posText == 0 :
+      output.delete(1.0)
+      output.insert(1.0, str(exp))
+      updatePosText(exp)
+      
     if output.get(1.0) == "0": # Si el numero en pantalla es 0 se sustituye por otro
       output.delete(1.0)    
       output.insert(1.0, str(exp))
@@ -16,7 +21,7 @@ def expresion(exp) :
         output.insert('1.' + str(posText) , str(exp))
         print(output.index('1.' + str(posText)))
         updatePosText(exp)
-      
+    '''  
 def updatePosText(accion):
   global posText
   if isinstance(accion, int) :
@@ -84,8 +89,15 @@ sub_button.grid(row=2, column=4)
   Agregar boton de all clear
 '''
 
-ac_button = tk.Button(frame_botones, text='AC', width=11, height=2)
-ac_button.grid(row=0, column=3, columnspan=2)
+ac_button = tk.Button(frame_botones, text='AC', width=5, height=2)
+ac_button.grid(row=0, column=4)
+
+'''
+  Boton borrar un parámetro
+'''
+
+bc_button = tk.Button(frame_botones, text='BC', width=5, height=2)
+bc_button.grid(row=0, column=3)
 
 '''
   Agregar boton de igual
