@@ -7,26 +7,36 @@ import tkinter as tk
 # Funcion reconocer expresion
 
 def expresion(exp) :
-    '''if posText == 0 :
+    if exp == 'AC' : # Borramos y mostramos 0
+      output.delete(1.0,'end')
+      output.insert(1.0, '0')
+      updatePosText(exp)
+    
+    elif exp == 'BC': #Borramos una posicion de la pantalla
+      updatePosText(exp)
+      if posText == 0 :
+        output.delete(1.0)
+        output.insert(1.0, '0')
+      else :
+        output.delete('1.' + str(posText))
+    
+    elif posText == 0 : # Cambiamos valor 0 por otro valor
       output.delete(1.0)
       output.insert(1.0, str(exp))
-      updatePosText(exp)
-      
-    if output.get(1.0) == "0": # Si el numero en pantalla es 0 se sustituye por otro
-      output.delete(1.0)    
-      output.insert(1.0, str(exp))
-      updatePosText(exp) 
+      updatePosText('IN')
+
     else : # Mostramos los numeros en orden al que se marcan
-      if posText <= 30 : 
+      if posText < 30 : 
         output.insert('1.' + str(posText) , str(exp))
-        print(output.index('1.' + str(posText)))
-        updatePosText(exp)
-    '''  
+        updatePosText('IN')
+
 def updatePosText(accion):
   global posText
-  if isinstance(accion, int) :
+  if accion == 'IN' and posText < 30:
     posText += 1
-  else :
+  elif accion == 'AC' and posText > 0 :
+    posText = 0
+  elif accion == 'BC' and posText > 0 :
     posText -= 1
 
 # Main 
@@ -89,14 +99,14 @@ sub_button.grid(row=2, column=4)
   Agregar boton de all clear
 '''
 
-ac_button = tk.Button(frame_botones, text='AC', width=5, height=2)
+ac_button = tk.Button(frame_botones, text='AC', width=5, height=2, command= lambda: expresion('AC'))
 ac_button.grid(row=0, column=4)
 
 '''
   Boton borrar un parámetro
 '''
 
-bc_button = tk.Button(frame_botones, text='BC', width=5, height=2)
+bc_button = tk.Button(frame_botones, text='BC', width=5, height=2, command=lambda: expresion('BC'))
 bc_button.grid(row=0, column=3)
 
 '''
