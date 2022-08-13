@@ -5,10 +5,13 @@
 import tkinter as tk
 
 # Funcion para mostrar digito(s) en pantalla
-def showExp(exp) :  
-  if posText == 0 and (exp.isdigit() or exp == '.') : # Cambiamos valor 0 por otro valor
+def showExp(exp) : 
+  if error: # Error, no hace nada
+    pass 
+
+  elif posText == 0 and (exp.isdigit() or exp == '.') : # Cambiamos valor 0 por otro valor
     updatePosText('IN') # Actualizamos pos. siguiente numero
-    updateSExp(exp)
+    updateSExp(exp) # Actualizamos la expresion en pantalla
     output.delete(1.0)
     output.insert(1.0, exp) # Mostramos nuevo numero
 
@@ -24,9 +27,13 @@ def deleteExp(action) :
     output.insert(1.0, '0') # Añadimos 0 a la pantalla
     updateSExp(action) # Actualizamos numero actual
     updatePosText(action) # Actualizamos posicion siguiente digito 
+    if error: # Cambiar valor de error y resetear todo
+      changeValErr()
+  elif error: # Error, no hace nada
+    pass
   elif action == 'BC': #Borramos una posicion de la pantalla
     updatePosText(action) # Actualizamos posicion siguiente digito
-    updateSExp(action) # Actualizamos numero actual
+    updateSExp(action) # Actualizamos expresion
     if posText == 0 : # Se borra último dígito
       output.delete(1.0)
       output.insert(1.0, '0') # Añadimos 0 a la pantalla
@@ -54,6 +61,8 @@ def updatePosText(action):
     posText = 0
   elif action == 'BC' and posText > 0 : # Posición actual
     posText -= 1
+  elif action == 'RES' and posText > 0:
+    posText = len(sExp)
 
 # Funcion para actualizar número en pantalla
 def updateSNum(action): 
@@ -74,19 +83,30 @@ def updateSExp(action):
     sExp = ''
   elif action == 'BC': # Borrar último digito introducido
     sExp = sExp[:len(sExp)-1]
+  elif action == 'RES': # Calcular resultado expresion
+    sExp = str(eval(sExp))
   else : # Añadir un dígito a la pantalla
     sExp += action
 
 # Funcion para evaluar expresion y mostrar resultado en pantalla
 def evalExp():
-  try: 
-    result = eval(sExp)
-    output.delete(1.0, 'end')
-    output.insert(1.0, result)
-  except:
-    output.delete(1.0, 'end')
-    output.insert(1.0, "Syntax Error")   
-  
+  if error: # Hay error, no hace nada
+    pass 
+  else : # Intentar calcular resultado expresion
+    try: 
+      updateSExp('RES') # Actualizamos expresion
+      updatePosText('RES') # Actualizamos posText
+      output.delete(1.0, 'end')
+      output.insert(1.0, sExp) 
+    except: # Error al evaluar expresion
+      output.delete(1.0, 'end')
+      output.insert(1.0, "Syntax Error")
+      changeValErr() # Cambiar estado error a True
+
+# Funcion para cambiar estado error 
+def changeValErr(): 
+  global error 
+  error = not error
 
 # Main 
 
@@ -94,6 +114,8 @@ posText = 0 # Posicion columna donde se muestra el número
 sNum = '' # Número que se tiene que motrar por pantalla
 gNum = ['None'] * 2 # Matriz para guardar dos números
 sExp = ''
+error = False
+
 window = tk.Tk() # Crear ventana principal 
 
 '''
