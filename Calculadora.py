@@ -41,7 +41,8 @@ def deleteExp(action) :
       output.delete(1.0,'end')
       output.insert(1.0, sExp) # Mostramos número actual
 
-# Función para añadir punto (donde corresponda) a número de más de 3 cifras 
+# Función para añadir punto a número de más de 3 cifras 
+# No usada por ahora
 def addPoint(sNum):
   lnum = list(reversed(sNum)) # Lista invertida con el número original
   pnum = '' # Variable para contener el número con puntos
@@ -65,6 +66,7 @@ def updatePosText(action):
     posText = len(sExp)
 
 # Funcion para actualizar número en pantalla
+# No usada por ahora
 def updateSNum(action): 
   global sNum # Trabajamos con variable global sNum
   
@@ -111,10 +113,10 @@ def changeValErr():
 # Main 
 
 posText = 0 # Posicion columna donde se muestra el número
-sNum = '' # Número que se tiene que motrar por pantalla
-gNum = ['None'] * 2 # Matriz para guardar dos números
-sExp = ''
-error = False
+# sNum = '' # Número que se tiene que motrar por pantalla
+# gNum = ['None'] * 2 # Matriz para guardar dos números
+sExp = '' # Expresion mostrada en pantalla
+error = False # Controla si se produce error de sintaxis (bloque todo si es True)
 
 window = tk.Tk() # Crear ventana principal 
 
