@@ -4,36 +4,35 @@
 
 import tkinter as tk
 
+# Funcion para mostrar digito(s) en pantalla
 def showExp(exp) :  
-  if posText == 0 : # Cambiamos valor 0 por otro valor
-    updateSNum(exp) # Actualizamos número
+  if posText == 0 and exp.isdigit(): # Cambiamos valor 0 por otro valor
     updatePosText('IN') # Actualizamos pos. siguiente numero
+    updateSExp(exp)
     output.delete(1.0)
-    output.insert(1.0, sNum) # Mostramos nuevo numero
+    output.insert(1.0, exp) # Mostramos nuevo numero
 
-  elif posText < 30 : # Mostramos los numeros en orden (max. 30 digitos)
-    updateSNum(exp) # Actualizamos número
-    output.delete('1.0','end')
-    output.insert('1.' + str(posText), addPoint(sNum)) # Mostramos nuevo número
+  elif posText > 0 and posText < 30 : # Mostramos los numeros en orden (max. 30 digitos)
+    updateSExp(exp)
+    output.insert('1.' + str(posText), exp) # Mostramos nuevo número
     updatePosText('IN') # Actualizamos posicion siguiente digito 
 
 # Función para borrar digito(s) de pantalla
-
 def deleteExp(action) :
   if action == 'AC' : # Borramos todo y mostramos 0
     output.delete(1.0,'end')
     output.insert(1.0, '0') # Añadimos 0 a la pantalla
-    updateSNum(action) # Actualizamos numero actual
+    updateSExp(action) # Actualizamos numero actual
     updatePosText(action) # Actualizamos posicion siguiente digito 
   elif action == 'BC': #Borramos una posicion de la pantalla
     updatePosText(action) # Actualizamos posicion siguiente digito
-    updateSNum(action) # Actualizamos numero actual
+    updateSExp(action) # Actualizamos numero actual
     if posText == 0 : # Se borra último dígito
       output.delete(1.0)
       output.insert(1.0, '0') # Añadimos 0 a la pantalla
     else : # No se borra último dígito
       output.delete(1.0,'end')
-      output.insert(1.0, addPoint(sNum)) # Mostramos número actual
+      output.insert(1.0, sExp) # Mostramos número actual
 
 # Función para añadir punto (donde corresponda) a número de más de 3 cifras 
 def addPoint(sNum):
@@ -47,7 +46,6 @@ def addPoint(sNum):
   return pnum 
 
 # Función para actualizar donde se muestra el siguient dígito
-
 def updatePosText(action): 
   global posText
   if action == 'IN' and posText < 30: # Posición siguiente
@@ -58,7 +56,6 @@ def updatePosText(action):
     posText -= 1
 
 # Funcion para actualizar número en pantalla
-
 def updateSNum(action): 
   global sNum # Trabajamos con variable global sNum
   
@@ -70,11 +67,35 @@ def updateSNum(action):
   elif action.isdigit() : # Añadir un dígito a la pantalla
     sNum += action
 
+# Funcion que actualiza expresion para evaluar
+def updateSExp(action):
+  global sExp 
+
+  if action == 'AC': # Borrar todos los digitos de la pantalla
+    sExp = ''
+  elif action == 'BC': # Borrar último digito introducido
+    sExp = sExp[:len(sExp)-1]
+    pass 
+  else : # Añadir un dígito a la pantalla
+    sExp += action
+
+# Funcion para evaluar expresion y mostrar resultado en pantalla
+def evalExp():
+  try: 
+    result = eval(sExp)
+    output.delete(1.0, 'end')
+    output.insert(1.0, result)
+  except:
+    output.delete(1.0, 'end')
+    output.insert(1.0, "Syntax Error")   
+  
+
 # Main 
 
 posText = 0 # Posicion columna donde se muestra el número
 sNum = '' # Número que se tiene que motrar por pantalla
-
+gNum = ['None'] * 2 # Matriz para guardar dos números
+sExp = ''
 window = tk.Tk() # Crear ventana principal 
 
 '''
@@ -118,13 +139,13 @@ nine_button.grid(row=0,column=2)
 '''
   Agregar botones de operaciones aritméticas
 '''
-prod_button = tk.Button(frame_botones, text='x', width=5, height=2)
+prod_button = tk.Button(frame_botones, text='x', width=5, height=2, command= lambda: showExp('*'))
 prod_button.grid(row=1, column=3)
-div_button = tk.Button(frame_botones, text='/', width=5, height=2)
+div_button = tk.Button(frame_botones, text='/', width=5, height=2, command= lambda: showExp('/'))
 div_button.grid(row=1, column=4)
-sum_button = tk.Button(frame_botones, text='+', width=5, height=2)
+sum_button = tk.Button(frame_botones, text='+', width=5, height=2, command= lambda: showExp('+'))
 sum_button.grid(row=2, column=3)
-sub_button = tk.Button(frame_botones, text='-', width=5, height=2)
+sub_button = tk.Button(frame_botones, text='-', width=5, height=2, command= lambda: showExp('-'))
 sub_button.grid(row=2, column=4)
 
 '''
@@ -142,7 +163,7 @@ bc_button.grid(row=0, column=3)
 '''
   Agregar boton de igual
 '''
-eq_button = tk.Button(frame_botones, text='=', width=11, height=2)
+eq_button = tk.Button(frame_botones, text='=', width=11, height=2, command=evalExp)
 eq_button.grid(row=3, column=3, columnspan=2)
 
 window.mainloop() # Correr ventana principal
