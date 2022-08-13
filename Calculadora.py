@@ -6,7 +6,7 @@ import tkinter as tk
 
 # Funcion para mostrar digito(s) en pantalla
 def showExp(exp) :  
-  if posText == 0 and exp.isdigit(): # Cambiamos valor 0 por otro valor
+  if posText == 0 and (exp.isdigit() or exp == '.') : # Cambiamos valor 0 por otro valor
     updatePosText('IN') # Actualizamos pos. siguiente numero
     updateSExp(exp)
     output.delete(1.0)
@@ -63,7 +63,6 @@ def updateSNum(action):
     sNum = ''
   elif action == 'BC': # Borrar último digito introducido
     sNum = sNum[:len(sNum)-1]
-    pass 
   elif action.isdigit() : # Añadir un dígito a la pantalla
     sNum += action
 
@@ -75,7 +74,6 @@ def updateSExp(action):
     sExp = ''
   elif action == 'BC': # Borrar último digito introducido
     sExp = sExp[:len(sExp)-1]
-    pass 
   else : # Añadir un dígito a la pantalla
     sExp += action
 
@@ -165,6 +163,12 @@ bc_button.grid(row=0, column=3)
 '''
 eq_button = tk.Button(frame_botones, text='=', width=11, height=2, command=evalExp)
 eq_button.grid(row=3, column=3, columnspan=2)
+
+'''
+  Boton punto
+'''
+pt_button = tk.Button(frame_botones, text='.', width=5, height=2, command=lambda: showExp('.'))
+pt_button.grid(row=3, column=2)
 
 window.mainloop() # Correr ventana principal
 
